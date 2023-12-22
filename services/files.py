@@ -1,5 +1,3 @@
-import csv
-
 import pandas as pd
 
 
@@ -14,22 +12,12 @@ class FileManager:
     def __init__(self, file_path):
         self.file_path = file_path
 
-    def gera_csv_from_excel(self):
+    def get_data_from_excel(self):
         """
-        Gera arquivos CSV a partir de um arquivo Excel com múltiplas abas.
-        Cada aba é salva como um arquivo CSV separado.
+        Gera uma sequência de CNPJs a partir de um arquivo Excel com múltiplas abas.
+        Cada CNPJ é gerado um de cada vez.
         """
         df = pd.read_excel(self.file_path, sheet_name=None)
-        for key, value in df.items():
-            value.to_csv(f'{key}.csv')
-
-    def read_csv(self):
-        """
-        Lê um arquivo CSV e retorna seu conteúdo como uma lista.
-
-        :return:
-            list: Conteúdo do arquivo CSV como uma lista de linhas.
-        """
-        with open(self.file_path, 'r') as file:
-            reader = csv.reader(file)
-            return list(reader)
+        for _, value in df.items():
+            for cnpj in value["CNPJ"]:
+                yield cnpj

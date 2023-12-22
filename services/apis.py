@@ -24,7 +24,6 @@ class ReceitaFederalService:
         :return:
             dict: Dados retornados pela API para o CNPJ especificado.
         """
-        cnpj = re.sub('[^0-9]+', '', cnpj)
         url = f'{self.base_url}/{cnpj}'
         response = requests.get(url)
         return response.json()
@@ -40,7 +39,9 @@ class ReceitaFederalService:
             bool: True se o CNPJ é válido e está ativo, False caso contrário.
         """
         data = self.consulta_cnpj(cnpj)
-        return data['status'] == 'OK' and data['situacao'] == 'ATIVA'
+        if data.get('status') == 'ERROR':
+            return {'situacao': data.get('message')}
+        return data
 
     def get_situacao_cnpj(self, cnpj):
         """
@@ -52,5 +53,5 @@ class ReceitaFederalService:
         :return:
             str: Situação do CNPJ.
         """
-        data = self.consulta_cnpj(cnpj)
+        data = self.validar_cnpj(cnpj)
         return data.get('situacao')

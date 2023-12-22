@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Esta Prova de Conceito (PoC) demonstra a funcionalidade de análise de CNPJs utilizando uma API da Receita Federal e
-manipulação de arquivos Excel e CSV em Python, gerenciada pelo Poetry.
+manipulação de arquivos Excel em Python, gerenciada pelo Poetry.
 
 ## Estrutura do Projeto
 
@@ -44,12 +44,8 @@ Após configurar o ambiente, você pode executar o script principal com o seguin
 python main.py
 ```
 
-Isso iniciará a análise dos CNPJs, lendo os dados do arquivo Excel, convertendo-os para CSV e realizando consultas na
-API da Receita Federal.
+Isso iniciará a análise dos CNPJs, lendo os dados do arquivo Excel e realizando consultas na API da Receita Federal.
 
 ## Saída Esperada
 
 O script exibirá no console a situação dos CNPJs analisados e gravará informações relevantes no arquivo `RelCNPJ.txt`.
-
-
-Adicionar badges (insígnias) ao `readme.md` é uma ótima maneira de fornecer informações visuais rápidas sobre o estado do seu projeto, como status de build, cobertura de testes, versão da linguagem Python, etc. Vou adicionar algumas sugestões de badges ao seu `readme.md`:

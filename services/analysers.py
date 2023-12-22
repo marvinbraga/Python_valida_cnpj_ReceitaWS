@@ -2,31 +2,43 @@ import re
 import time
 
 from services.apis import ReceitaFederalService
-from services.files import FileManager
 
 
 class CNPJAnalyzer:
     """
     Classe principal para analisar CNPJs utilizando o serviço da Receita Federal.
 
-    :argument:
+    Atributos:
         receita_service (ReceitaFederalService): Instância do serviço de consulta à Receita Federal.
-        file_manager (FileManager): Instância do gerenciador de arquivos.
     """
 
-    def __init__(self, receita_service: ReceitaFederalService, file_manager: FileManager):
+    def __init__(self, receita_service: ReceitaFederalService):
         self.receita_service = receita_service
-        self.file_manager = file_manager
+
+    def save_data(self, cnpj, situacao):
+        """
+        Salva a situação do CNPJ em um arquivo.
+
+        Parâmetros:
+            cnpj (str): CNPJ analisado.
+            situacao (str): Situação do CNPJ obtida da Receita Federal.
+        """
+        with open("RelCNPJ.txt", "a", encoding='utf-8') as file:
+            file.write(f'A situação do CNPJ {cnpj} é {situacao}.\n')
+
+        print(f'A situação do CNPJ {cnpj} é {situacao}')
+        return self
 
     def analyze_cnpj(self, cnpj_list):
         """
-        Analisa uma lista de CNPJs, consultando a situação de cada um na Receita Federal.
+        Analisa uma sequência de CNPJs, consultando a situação de cada um na Receita Federal.
 
-        Parâmetros:
-            cnpj_list (list): Lista de CNPJs a serem analisados.
+        :param:
+            cnpj_list (generator): Gerador que produz CNPJs.
         """
         for cnpj in cnpj_list:
-            cnpj = re.sub('[^0-9]+', '', cnpj)
+            cnpj = re.sub('[^0-9]+', '', str(cnpj))
             if len(cnpj) > 5:
                 time.sleep(21)  # Mantendo a regra do plano gratuito
                 situacao = self.receita_service.get_situacao_cnpj(cnpj)
+                self.save_data(cnpj, situacao)

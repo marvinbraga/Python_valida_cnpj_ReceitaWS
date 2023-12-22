@@ -2,13 +2,13 @@ import pandas as pd
 from faker import Faker
 
 # Inicializar o gerador de dados fictícios
-fake = Faker()
+fake = Faker('pt-BR')
 
 # Criar dados fictícios para contratantes
 data = {
     "CNPJ": [fake.unique.random_number(digits=14, fix_len=True) for _ in range(10)],
     "Nome da Empresa": [fake.company() for _ in range(10)],
-    "Endereço": [fake.address() for _ in range(10)],
+    "Endereço": [fake.address().replace('\n', ' ').strip() for _ in range(10)],
     "Telefone": [fake.phone_number() for _ in range(10)],
     "E-mail": [fake.email() for _ in range(10)],
     "Setor": [fake.job() for _ in range(10)],
