@@ -25,7 +25,8 @@ class ReceitaFederalService:
             dict: Dados retornados pela API para o CNPJ especificado.
         """
         url = f'{self.base_url}/{cnpj}'
-        response = requests.get(url)
+        headers = {'Accept': 'application/json'}
+        response = requests.get(url=url, headers=headers)
         return response.json()
 
     def validar_cnpj(self, cnpj):

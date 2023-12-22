@@ -1,3 +1,4 @@
+import os.path
 import re
 import time
 
@@ -23,7 +24,8 @@ class CNPJAnalyzer:
             cnpj (str): CNPJ analisado.
             situacao (str): Situação do CNPJ obtida da Receita Federal.
         """
-        with open("RelCNPJ.txt", "a", encoding='utf-8') as file:
+        filename = os.path.normpath(os.path.join('../.res', 'RelCNPJ.txt'))
+        with open(filename, 'a', encoding='utf-8') as file:
             file.write(f'A situação do CNPJ {cnpj} é {situacao}.\n')
 
         print(f'A situação do CNPJ {cnpj} é {situacao}')
